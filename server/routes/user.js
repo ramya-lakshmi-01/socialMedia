@@ -11,10 +11,10 @@ const bcrypt = require("bcrypt");
 const salt = process.env.password_salt;
 
 const createUser = async (req, res) => {
-  const { username, password, name, email } = req.body;
+  const { username, password,email } = req.body;
   let newUserData = {
     username,
-    name,
+   
     email,
     password,
   };

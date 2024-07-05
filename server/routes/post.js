@@ -10,9 +10,15 @@ const createPost = async (req, res) => {
 };
 
 const getPostsByUserId = async (req, res) => {
-    const { user_id } = req.params;
+   
 
-    const posts = await Post.find({ user_id:user_id });
+    const posts = await Post.find().populate({path: "user_id", select: "-password"});
+    res.status(200).json(posts);
+};
+const getPostsById = async (req, res) => {
+   
+const {post_id} = req.params;
+    const posts = await Post.findById(post_id);
     res.status(200).json(posts);
 };
 const editPost = async (req, res) => {
@@ -27,7 +33,8 @@ const deletePost = async (req, res) => {
     res.status(200).json({ message: "Post deleted successfully" });
 };
 router.post("/add-new-post", createPost);
-router.get("/get-posts-by-id/:user_id", getPostsByUserId);
+router.get("/get-posts", getPostsByUserId);
+router.get("/get-post/:post_id", getPostsById);
 router.put("/edit/:post_id", editPost);
 router.delete("/delete/:post_id", deletePost);
 
